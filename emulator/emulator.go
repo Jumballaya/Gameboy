@@ -9,9 +9,9 @@ type Emulator struct {
 
 // New creates a new Emulator
 func New() *Emulator {
-	cpu := newCPU()
 	mmu := newMMU()
 	gpu := newGPU()
+	cpu := newCPU(mmu, gpu)
 
 	e := &Emulator{
 		cpu: cpu,
@@ -37,7 +37,11 @@ func (e *Emulator) Load(rom []byte) error {
 }
 
 // Start starts the emulator and runs the ROM
-func (e *Emulator) Start() {}
+func (e *Emulator) Start() {
+	for {
+		e.cpu.Exec()
+	}
+}
 
 // Pause pauses the emulator
 func (e *Emulator) Pause() {}

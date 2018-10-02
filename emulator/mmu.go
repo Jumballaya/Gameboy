@@ -20,7 +20,7 @@ type MMU struct {
 // NewMMU creates a new MMU
 func newMMU() *MMU {
 	mmu := &MMU{
-		bios: bios,
+		bios: biosClassic,
 	}
 	mmu.Reset()
 	return mmu
