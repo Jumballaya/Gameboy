@@ -1,7 +1,6 @@
 package emulator
 
-// Oplist is a map of functions (operations) for the CPU
-type Oplist map[string]func()
+import "fmt"
 
 // CPU is the emulated Z80 processor
 type CPU struct {
@@ -16,20 +15,23 @@ type CPU struct {
 
 // NewCPU creates a new CPU
 func newCPU(mmu *MMU, gpu *GPU) *CPU {
-	return &CPU{
+	cpu := &CPU{
 		Registers: newCPURegisters(),
 		Clock:     0,
 		Halt:      0,
 		Stop:      0,
-		ops:       &Oplist{},
 		gpu:       gpu,
 		mmu:       mmu,
 	}
+
+	cpu.ops = makeOpList(cpu.Registers)
+	return cpu
 }
 
 // Reset sets all the values back to their starting positions
 func (cpu *CPU) Reset() {
 	cpu.Registers = newCPURegisters()
+	cpu.ops = makeOpList(cpu.Registers)
 	cpu.Clock = 0
 	cpu.Halt = 0
 	cpu.Stop = 0
@@ -42,4 +44,6 @@ func (cpu *CPU) Exec() {
 	cpu.Registers.SetPC(cpu.Registers.GetPC() & 65535)
 	//cpu.Clock += cpu.Registers.getM()
 	opCode := cpu.mmu.ReadByte(pc)
+
+	fmt.Println(opCode)
 }
