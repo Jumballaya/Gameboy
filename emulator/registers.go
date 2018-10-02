@@ -3,10 +3,10 @@ package emulator
 // CPU Flags
 type cpuFlags struct {
 	flags int
-	z     int
-	n     int
-	h     int
-	c     int
+	z     int //
+	n     int //
+	h     int //
+	c     int //
 }
 
 // GetFlagsByte gets the byte that the flag is set to
@@ -22,21 +22,22 @@ func (f *cpuFlags) isC() bool { return GetBit(f.flags, f.c) }
 
 // CPU Registers
 type CPURegisters struct {
-	a int
-	b int
-	c int
-	d int
-	e int
+	a int // Arithmetic
+	b int //
+	c int // 8 bit registers for combination for 4 16bit registers
+	d int //		bc, de, hl and sp
+	e int //
+	h int // or 7 8bit registers: a, b, c, d, e, h, l, (hl)
+	l int //
+
 	f int
-	h int
-	l int
 
-	sp int
-	pc int
+	sp int // Stack Pointer
+	pc int // Program Counter
 
-	flags *cpuFlags
+	flags *cpuFlags // Flags for half-carry
 
-	ime bool
+	ime bool //
 }
 
 // New CPU Registers
