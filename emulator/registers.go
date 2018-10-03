@@ -13,10 +13,10 @@ type cpuFlags struct {
 func (f *cpuFlags) GetFlagsByte() int { return f.flags }
 
 // Flags bool getters
-func (f *cpuFlags) isZ() bool { return GetBit(f.flags, f.z) }
-func (f *cpuFlags) isN() bool { return GetBit(f.flags, f.n) }
-func (f *cpuFlags) isH() bool { return GetBit(f.flags, f.h) }
-func (f *cpuFlags) isC() bool { return GetBit(f.flags, f.c) }
+func (f *cpuFlags) IsZ() bool { return GetBit(f.flags, f.z) }
+func (f *cpuFlags) IsN() bool { return GetBit(f.flags, f.n) }
+func (f *cpuFlags) IsH() bool { return GetBit(f.flags, f.h) }
+func (f *cpuFlags) IsC() bool { return GetBit(f.flags, f.c) }
 
 // Flags setters
 func (f *cpuFlags) SetZ(z bool)            { f.flags = HandleSetBit(f.flags, f.z, z) }
