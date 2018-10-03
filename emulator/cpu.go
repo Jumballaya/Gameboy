@@ -23,8 +23,8 @@ func newCPU(mmu *MMU, gpu *GPU) *CPU {
 		gpu:       gpu,
 		mmu:       mmu,
 	}
-
 	cpu.ops = makeOpList(cpu.Registers)
+
 	return cpu
 }
 

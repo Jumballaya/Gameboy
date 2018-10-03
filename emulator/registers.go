@@ -3,14 +3,14 @@ package emulator
 // CPU Flags
 type cpuFlags struct {
 	flags int
-	z     int //
-	n     int //
-	h     int //
-	c     int //
+	z     int // Zero Flag
+	n     int // Subtract Flag
+	h     int // Half Carry Flag
+	c     int // Carry Flag
 }
 
 // GetFlagsByte gets the byte that the flag is set to
-func (f *cpuFlags) GetFlagByte() int { return f.flags }
+func (f *cpuFlags) GetFlagsByte() int { return f.flags }
 
 // Flags bool getters
 func (f *cpuFlags) isZ() bool { return GetBit(f.flags, f.z) }
@@ -19,6 +19,11 @@ func (f *cpuFlags) isH() bool { return GetBit(f.flags, f.h) }
 func (f *cpuFlags) isC() bool { return GetBit(f.flags, f.c) }
 
 // Flags setters
+func (f *cpuFlags) SetZ(z bool)            { f.flags = HandleSetBit(f.flags, f.z, z) }
+func (f *cpuFlags) SetN(n bool)            { f.flags = HandleSetBit(f.flags, f.n, n) }
+func (f *cpuFlags) SetH(h bool)            { f.flags = HandleSetBit(f.flags, f.h, h) }
+func (f *cpuFlags) SetC(c bool)            { f.flags = HandleSetBit(f.flags, f.c, c) }
+func (f *cpuFlags) SetFlagsByte(flags int) { f.flags = flags }
 
 // CPU Registers
 type CPURegisters struct {
@@ -35,7 +40,7 @@ type CPURegisters struct {
 	sp int // Stack Pointer
 	pc int // Program Counter
 
-	flags *cpuFlags // Flags for half-carry
+	flags *cpuFlags // Flags
 
 	ime bool //
 }
@@ -99,16 +104,16 @@ func (r *CPURegisters) SetE(e int)      { r.e = e }
 func (r *CPURegisters) SetF(f int)      { r.f = f }
 func (r *CPURegisters) SetH(h int)      { r.h = h }
 func (r *CPURegisters) SetL(l int)      { r.l = l }
-func (r *CPURegisters) SetAF(af int)    { r.a, r.f = SplitBytes(af) }
-func (r *CPURegisters) SetBC(bc int)    { r.b, r.c = SplitBytes(bc) }
-func (r *CPURegisters) SetDE(de int)    { r.d, r.e = SplitBytes(de) }
-func (r *CPURegisters) SetHL(hl int)    { r.h, r.l = SplitBytes(hl) }
+func (r *CPURegisters) SetAF(af int)    { r.a, r.f = SplitWord(af) }
+func (r *CPURegisters) SetBC(bc int)    { r.b, r.c = SplitWord(bc) }
+func (r *CPURegisters) SetDE(de int)    { r.d, r.e = SplitWord(de) }
+func (r *CPURegisters) SetHL(hl int)    { r.h, r.l = SplitWord(hl) }
 func (r *CPURegisters) SetSP(sp int)    { r.sp = sp }
 func (r *CPURegisters) SetPC(pc int)    { r.pc = pc }
 func (r *CPURegisters) SetIME(ime bool) { r.ime = ime }
 
 // Math
-func (r *CPURegisters) decHL() int {
+func (r *CPURegisters) DecHL() int {
 	old := r.GetHL()
 	r.SetHL((old - 1) % 0xffff)
 	return old
