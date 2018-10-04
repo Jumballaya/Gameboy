@@ -12,4 +12,5 @@ type Renderer interface {
 	Pause()
 	Stop()
 	Start()
+	Print() []int
 }

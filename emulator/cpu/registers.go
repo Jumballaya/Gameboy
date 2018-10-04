@@ -121,7 +121,7 @@ func (r *Registers) DecHL() int {
 
 func (r *Registers) IncHL() int {
 	old := r.GetHL()
-	r.SetHL((old - 1) % 0xffff)
+	r.SetHL((old + 1) % 0xffff)
 	return old
 }
 

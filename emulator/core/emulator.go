@@ -15,8 +15,8 @@ type Emulator struct {
 
 // New creates a new Emulator
 func New() *Emulator {
-	mmu := mmu.New()
 	gpu := gpu.New()
+	mmu := mmu.New(gpu)
 	cpu := cpu.New(mmu, gpu)
 
 	e := &Emulator{

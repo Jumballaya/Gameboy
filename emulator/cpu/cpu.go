@@ -12,7 +12,7 @@ type CPU struct {
 	Clock     int
 	Halt      int
 	Stop      int
-	ops       *Oplist
+	ops       map[string]*Oplist
 	mmu       emulator.Memory
 	gpu       emulator.Memory
 }
@@ -27,7 +27,12 @@ func New(mmu emulator.Memory, gpu emulator.Memory) *CPU {
 		gpu:       gpu,
 		mmu:       mmu,
 	}
-	cpu.ops, _ = makeOpList(cpu.Registers)
+
+	main, extern := makeOpList(cpu.Registers)
+	cpu.ops = map[string]*Oplist{
+		"main":   main,
+		"extern": extern,
+	}
 
 	return cpu
 }
@@ -35,19 +40,43 @@ func New(mmu emulator.Memory, gpu emulator.Memory) *CPU {
 // Reset sets all the values back to their starting positions
 func (cpu *CPU) Reset() {
 	cpu.Registers = newRegisters()
-	cpu.ops, _ = makeOpList(cpu.Registers)
+	main, extern := makeOpList(cpu.Registers)
+	cpu.ops = map[string]*Oplist{
+		"main":   main,
+		"extern": extern,
+	}
 	cpu.Clock = 0
 	cpu.Halt = 0
 	cpu.Stop = 0
 }
 
 // Exec executes a single cycle of the CPU
-func (cpu *CPU) Exec() {
+func (cpu *CPU) Exec() int {
 	pc := cpu.Registers.GetPC()
-	cpu.Registers.AddToPC(1)
-	cpu.Registers.SetPC(cpu.Registers.GetPC() & 65535)
-	//cpu.Clock += cpu.Registers.getM()
 	opCode := cpu.mmu.ReadByte(pc)
+	pc += 1
 
-	fmt.Println(opCode)
+	var op Op
+
+	if opCode == 0xcb {
+		opCode = cpu.mmu.ReadByte(pc)
+		pc += 1
+		op = cpu.ops["extern"].fns[opCode]
+	} else {
+		op = cpu.ops["main"].fns[opCode]
+	}
+
+	fmt.Println(op.String())
+
+	argsLen := op.argsLen
+	var args []int
+	for i := 0; i < argsLen; i++ {
+		args = append(args, cpu.mmu.ReadByte(pc))
+		pc += 1
+	}
+
+	cpu.Registers.SetPC(pc)
+	op.fn(cpu.Registers, cpu.mmu, args)
+
+	return op.cycles
 }
