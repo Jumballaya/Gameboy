@@ -1,6 +1,10 @@
 package cpu
 
-import "github.com/jumballaya/gameboy/emulator"
+import (
+	"fmt"
+
+	"github.com/jumballaya/gameboy/emulator"
+)
 
 func makeOpList(r *Registers) (*Oplist, *Oplist) {
 	// Main OpList
@@ -2589,44 +2593,989 @@ func makeOpList(r *Registers) (*Oplist, *Oplist) {
 
 			// SWAP A
 			0x37: Op{
-				code: 0x37,
+				code:    0x37,
+				cycles:  8,
+				label:   "SWAP A",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetA(Swap(r.GetFlags(), r.GetA()))
+				},
 			},
 
 			// SWAP B
 			0x30: Op{
-				code: 0x30,
+				code:    0x30,
+				cycles:  8,
+				label:   "SWAP B",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetB(Swap(r.GetFlags(), r.GetB()))
+				},
 			},
 
 			// SWAP C
 			0x31: Op{
-				code: 0x31,
+				code:    0x31,
+				cycles:  8,
+				label:   "SWAP C",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetC(Swap(r.GetFlags(), r.GetC()))
+				},
 			},
 
 			// SWAP D
 			0x32: Op{
-				code: 0x32,
+				code:    0x32,
+				cycles:  8,
+				label:   "SWAP D",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetD(Swap(r.GetFlags(), r.GetD()))
+				},
 			},
 
 			// SWAP E
 			0x33: Op{
-				code: 0x33,
+				code:    0x33,
+				cycles:  8,
+				label:   "SWAP E",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetE(Swap(r.GetFlags(), r.GetE()))
+				},
 			},
 
 			// SWAP H
 			0x34: Op{
-				code: 0x34,
+				code:    0x34,
+				cycles:  8,
+				label:   "SWAP H",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetH(Swap(r.GetFlags(), r.GetH()))
+				},
 			},
 
 			// SWAP L
 			0x35: Op{
-				code: 0x35,
+				code:    0x35,
+				cycles:  8,
+				label:   "SWAP L",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetL(Swap(r.GetFlags(), r.GetL()))
+				},
 			},
 
 			// SWAP (HL)
 			0x36: Op{
-				code: 0x36,
+				code:    0x36,
+				cycles:  16,
+				label:   "SWAP (HL)",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					m.WriteByte(r.GetHL(), Swap(r.GetFlags(), m.ReadByte(r.GetHL())))
+				},
+			},
+
+			// RLC A
+			0x07: Op{
+				code:    0x07,
+				cycles:  8,
+				label:   "RLC A",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetA(RotateLeft(r.GetFlags(), r.GetA()))
+				},
+			},
+
+			// RLC B
+			0x00: Op{
+				code:    0x00,
+				cycles:  8,
+				label:   "RLC B",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetB(RotateLeft(r.GetFlags(), r.GetB()))
+				},
+			},
+
+			// RLC C
+			0x01: Op{
+				code:    0x01,
+				cycles:  8,
+				label:   "RLC C",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetC(RotateLeft(r.GetFlags(), r.GetC()))
+				},
+			},
+
+			// RLC D
+			0x02: Op{
+				code:    0x02,
+				cycles:  8,
+				label:   "RLC D",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetD(RotateLeft(r.GetFlags(), r.GetD()))
+				},
+			},
+
+			// RLC E
+			0x03: Op{
+				code:    0x03,
+				cycles:  8,
+				label:   "RLC E",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetE(RotateLeft(r.GetFlags(), r.GetE()))
+				},
+			},
+
+			// RLC H
+			0x04: Op{
+				code:    0x04,
+				cycles:  8,
+				label:   "RLC H",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetH(RotateLeft(r.GetFlags(), r.GetH()))
+				},
+			},
+
+			// RLC L
+			0x05: Op{
+				code:    0x05,
+				cycles:  8,
+				label:   "RLC L",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetL(RotateLeft(r.GetFlags(), r.GetL()))
+				},
+			},
+
+			// RLC (HL)
+			0x06: Op{
+				code:    0x06,
+				cycles:  16,
+				label:   "RLC (HL)",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					hl := r.GetHL()
+					atHL := m.ReadByte(hl)
+					m.WriteByte(hl, RotateLeft(r.GetFlags(), atHL))
+				},
+			},
+
+			// RL A
+			0x17: Op{
+				code:    0x17,
+				cycles:  8,
+				label:   "RL A",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetA(RotateLeftThroughCarry(r.GetFlags(), r.GetA()))
+				},
+			},
+
+			// RL B
+			0x10: Op{
+				code:    0x10,
+				cycles:  8,
+				label:   "RL B",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetB(RotateLeftThroughCarry(r.GetFlags(), r.GetB()))
+				},
+			},
+
+			// RL C
+			0x11: Op{
+				code:    0x11,
+				cycles:  8,
+				label:   "RL C",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetC(RotateLeftThroughCarry(r.GetFlags(), r.GetC()))
+				},
+			},
+
+			// RL D
+			0x12: Op{
+				code:    0x12,
+				cycles:  8,
+				label:   "RL D",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetD(RotateLeftThroughCarry(r.GetFlags(), r.GetD()))
+				},
+			},
+
+			// RL E
+			0x13: Op{
+				code:    0x13,
+				cycles:  8,
+				label:   "RL E",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetE(RotateLeftThroughCarry(r.GetFlags(), r.GetE()))
+				},
+			},
+
+			// RL H
+			0x14: Op{
+				code:    0x14,
+				cycles:  8,
+				label:   "RL H",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetH(RotateLeftThroughCarry(r.GetFlags(), r.GetH()))
+				},
+			},
+
+			// RL L
+			0x15: Op{
+				code:    0x15,
+				cycles:  8,
+				label:   "RL L",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetL(RotateLeftThroughCarry(r.GetFlags(), r.GetL()))
+				},
+			},
+
+			// RL (HL)
+			0x16: Op{
+				code:    0x16,
+				cycles:  16,
+				label:   "RL (HL)",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					hl := r.GetHL()
+					atHL := m.ReadByte(hl)
+					m.WriteByte(hl, RotateLeftThroughCarry(r.GetFlags(), atHL))
+				},
+			},
+
+			// RRC A
+			0x0f: Op{
+				code:    0x0f,
+				cycles:  8,
+				label:   "RRC A",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetA(RotateRight(r.GetFlags(), r.GetA()))
+				},
+			},
+
+			// RRC B
+			0x08: Op{
+				code:    0x08,
+				cycles:  8,
+				label:   "RRC B",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetB(RotateRight(r.GetFlags(), r.GetB()))
+				},
+			},
+
+			// RRC C
+			0x09: Op{
+				code:    0x09,
+				cycles:  8,
+				label:   "RRC C",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetC(RotateRight(r.GetFlags(), r.GetC()))
+				},
+			},
+
+			// RRC D
+			0x0a: Op{
+				code:    0x0a,
+				cycles:  8,
+				label:   "RRC D",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetD(RotateRight(r.GetFlags(), r.GetD()))
+				},
+			},
+
+			// RRC E
+			0x0b: Op{
+				code:    0x0b,
+				cycles:  8,
+				label:   "RRC E",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetE(RotateRight(r.GetFlags(), r.GetE()))
+				},
+			},
+
+			// RRC H
+			0x0c: Op{
+				code:    0x0c,
+				cycles:  8,
+				label:   "RRC H",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetH(RotateRight(r.GetFlags(), r.GetH()))
+				},
+			},
+
+			// RRC L
+			0x0d: Op{
+				code:    0x0d,
+				cycles:  8,
+				label:   "RRC L",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetL(RotateRight(r.GetFlags(), r.GetL()))
+				},
+			},
+
+			// RRC (HL)
+			0x0e: Op{
+				code:    0x0e,
+				cycles:  16,
+				label:   "RRC (HL)",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					hl := r.GetHL()
+					atHL := m.ReadByte(hl)
+					m.WriteByte(hl, RotateRight(r.GetFlags(), atHL))
+				},
+			},
+
+			// RR A
+			0x1f: Op{
+				code:    0x1f,
+				cycles:  8,
+				label:   "RR A",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetA(RotateRightThroughCarry(r.GetFlags(), r.GetA()))
+				},
+			},
+
+			// RR B
+			0x18: Op{
+				code:    0x18,
+				cycles:  8,
+				label:   "RR B",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetB(RotateRightThroughCarry(r.GetFlags(), r.GetB()))
+				},
+			},
+
+			// RR C
+			0x19: Op{
+				code:    0x19,
+				cycles:  8,
+				label:   "RR C",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetC(RotateRightThroughCarry(r.GetFlags(), r.GetC()))
+				},
+			},
+
+			// RR D
+			0x1a: Op{
+				code:    0x1a,
+				cycles:  8,
+				label:   "RR D",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetD(RotateRightThroughCarry(r.GetFlags(), r.GetD()))
+				},
+			},
+
+			// RR E
+			0x1b: Op{
+				code:    0x1b,
+				cycles:  8,
+				label:   "RR E",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetE(RotateRightThroughCarry(r.GetFlags(), r.GetE()))
+				},
+			},
+
+			// RR H
+			0x1c: Op{
+				code:    0x1c,
+				cycles:  8,
+				label:   "RR H",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetH(RotateRightThroughCarry(r.GetFlags(), r.GetH()))
+				},
+			},
+
+			// RR L
+			0x1d: Op{
+				code:    0x1d,
+				cycles:  8,
+				label:   "RR L",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetL(RotateRightThroughCarry(r.GetFlags(), r.GetL()))
+				},
+			},
+
+			// RR (HL)
+			0x1e: Op{
+				code:    0x1e,
+				cycles:  16,
+				label:   "RR (HL)",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					hl := r.GetHL()
+					atHL := m.ReadByte(hl)
+					m.WriteByte(hl, RotateRightThroughCarry(r.GetFlags(), atHL))
+				},
+			},
+
+			// SLA A
+			0x27: Op{
+				code:    0x27,
+				cycles:  8,
+				label:   "SLA A",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetA(ShiftLeft(r.GetFlags(), r.GetA()))
+				},
+			},
+
+			// SLA B
+			0x20: Op{
+				code:    0x20,
+				cycles:  8,
+				label:   "SLA B",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetB(ShiftLeft(r.GetFlags(), r.GetB()))
+				},
+			},
+
+			// SLA C
+			0x21: Op{
+				code:    0x21,
+				cycles:  8,
+				label:   "SLA C",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetC(ShiftLeft(r.GetFlags(), r.GetC()))
+				},
+			},
+
+			// SLA D
+			0x22: Op{
+				code:    0x22,
+				cycles:  8,
+				label:   "SLA D",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetD(ShiftLeft(r.GetFlags(), r.GetD()))
+				},
+			},
+
+			// SLA E
+			0x23: Op{
+				code:    0x23,
+				cycles:  8,
+				label:   "SLA E",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetE(ShiftLeft(r.GetFlags(), r.GetE()))
+				},
+			},
+
+			// SLA H
+			0x24: Op{
+				code:    0x24,
+				cycles:  8,
+				label:   "SLA H",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetH(ShiftLeft(r.GetFlags(), r.GetH()))
+				},
+			},
+
+			// SLA L
+			0x25: Op{
+				code:    0x25,
+				cycles:  8,
+				label:   "SLA L",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetL(ShiftLeft(r.GetFlags(), r.GetL()))
+				},
+			},
+
+			// SLA (HL)
+			0x26: Op{
+				code:    0x26,
+				cycles:  16,
+				label:   "SLA (HL)",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					hl := r.GetHL()
+					atHL := m.ReadByte(hl)
+					m.WriteByte(hl, ShiftLeft(r.GetFlags(), atHL))
+				},
+			},
+
+			// SRA A
+			0x2f: Op{
+				code:    0x2f,
+				cycles:  8,
+				label:   "SRA A",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetA(ShiftRightArithmetic(r.GetFlags(), r.GetA()))
+				},
+			},
+
+			// SRA B
+			0x28: Op{
+				code:    0x28,
+				cycles:  8,
+				label:   "SRA B",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetB(ShiftRightArithmetic(r.GetFlags(), r.GetB()))
+				},
+			},
+
+			// SRA C
+			0x29: Op{
+				code:    0x29,
+				cycles:  8,
+				label:   "SRA C",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetC(ShiftRightArithmetic(r.GetFlags(), r.GetC()))
+				},
+			},
+
+			// SRA D
+			0x2a: Op{
+				code:    0x2a,
+				cycles:  8,
+				label:   "SRA D",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetD(ShiftRightArithmetic(r.GetFlags(), r.GetD()))
+				},
+			},
+
+			// SRA E
+			0x2b: Op{
+				code:    0x2b,
+				cycles:  8,
+				label:   "SRA E",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetE(ShiftRightArithmetic(r.GetFlags(), r.GetE()))
+				},
+			},
+
+			// SRA H
+			0x2c: Op{
+				code:    0x2c,
+				cycles:  8,
+				label:   "SRA H",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetH(ShiftRightArithmetic(r.GetFlags(), r.GetH()))
+				},
+			},
+
+			// SRA L
+			0x2d: Op{
+				code:    0x2d,
+				cycles:  8,
+				label:   "SRA L",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetL(ShiftRightArithmetic(r.GetFlags(), r.GetL()))
+				},
+			},
+
+			// SRA (HL)
+			0x2e: Op{
+				code:    0x2e,
+				cycles:  16,
+				label:   "SRA (HL)",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					hl := r.GetHL()
+					atHL := m.ReadByte(hl)
+					m.WriteByte(hl, ShiftRightArithmetic(r.GetFlags(), atHL))
+				},
+			},
+
+			// SRL A
+			0x3f: Op{
+				code:    0x3f,
+				cycles:  8,
+				label:   "SRL A",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetA(ShiftRightLogical(r.GetFlags(), r.GetA()))
+				},
+			},
+
+			// SRL B
+			0x38: Op{
+				code:    0x38,
+				cycles:  8,
+				label:   "SRL B",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetB(ShiftRightLogical(r.GetFlags(), r.GetB()))
+				},
+			},
+
+			// SRL C
+			0x39: Op{
+				code:    0x39,
+				cycles:  8,
+				label:   "SRL C",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetC(ShiftRightLogical(r.GetFlags(), r.GetC()))
+				},
+			},
+
+			// SRL D
+			0x3a: Op{
+				code:    0x3a,
+				cycles:  8,
+				label:   "SRL D",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetD(ShiftRightLogical(r.GetFlags(), r.GetD()))
+				},
+			},
+
+			// SRL E
+			0x3b: Op{
+				code:    0x3b,
+				cycles:  8,
+				label:   "SRL E",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetE(ShiftRightLogical(r.GetFlags(), r.GetE()))
+				},
+			},
+
+			// SRL H
+			0x3c: Op{
+				code:    0x3c,
+				cycles:  8,
+				label:   "SRL H",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetH(ShiftRightLogical(r.GetFlags(), r.GetH()))
+				},
+			},
+
+			// SRL L
+			0x3d: Op{
+				code:    0x3d,
+				cycles:  8,
+				label:   "SRL L",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					r.SetL(ShiftRightLogical(r.GetFlags(), r.GetL()))
+				},
+			},
+
+			// SRL (HL)
+			0x3e: Op{
+				code:    0x3e,
+				cycles:  16,
+				label:   "SRL (HL)",
+				argsLen: 0,
+				fn: func(r *Registers, m emulator.Memory, args []int) {
+					hl := r.GetHL()
+					atHL := m.ReadByte(hl)
+					m.WriteByte(hl, ShiftRightLogical(r.GetFlags(), atHL))
+				},
 			},
 		},
+	}
+
+	// BIT, SET and RES extern operations
+	for i := 0; i < 8; i++ {
+		// BIT #, A
+		extList.fns[0x47+0x08*i] = Op{
+			code:    0x47 + 0x08*i,
+			cycles:  8,
+			label:   fmt.Sprintf("BIT %d, A", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				Bit(r.GetFlags(), r.GetA(), i)
+			},
+		}
+
+		// BIT #, B
+		extList.fns[0x40+0x08*i] = Op{
+			code:    0x40 + 0x08*i,
+			cycles:  8,
+			label:   fmt.Sprintf("BIT %d, B", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				Bit(r.GetFlags(), r.GetB(), i)
+			},
+		}
+
+		// BIT #, C
+		extList.fns[0x41+0x08*i] = Op{
+			code:    0x41 + 0x08*i,
+			cycles:  8,
+			label:   fmt.Sprintf("BIT %d, C", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				Bit(r.GetFlags(), r.GetC(), i)
+			},
+		}
+
+		// BIT #, D
+		extList.fns[0x42+0x08*i] = Op{
+			code:    0x42 + 0x08*i,
+			cycles:  8,
+			label:   fmt.Sprintf("BIT %d, D", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				Bit(r.GetFlags(), r.GetD(), i)
+			},
+		}
+
+		// BIT #, E
+		extList.fns[0x43+0x08*i] = Op{
+			code:    0x43 + 0x08*i,
+			cycles:  8,
+			label:   fmt.Sprintf("BIT %d, E", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				Bit(r.GetFlags(), r.GetE(), i)
+			},
+		}
+
+		// BIT #, H
+		extList.fns[0x44+0x08*i] = Op{
+			code:    0x44 + 0x08*i,
+			cycles:  8,
+			label:   fmt.Sprintf("BIT %d, H", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				Bit(r.GetFlags(), r.GetH(), i)
+			},
+		}
+
+		// BIT #, L
+		extList.fns[0x45+0x08*i] = Op{
+			code:    0x45 + 0x08*i,
+			cycles:  8,
+			label:   fmt.Sprintf("BIT %d, L", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				Bit(r.GetFlags(), r.GetL(), i)
+			},
+		}
+
+		// BIT #, (HL)
+		extList.fns[0x46+0x08*i] = Op{
+			code:    0x46 + 0x08*i,
+			cycles:  16,
+			label:   fmt.Sprintf("BIT %d, (HL)", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				Bit(r.GetFlags(), m.ReadByte(r.GetHL()), i)
+			},
+		}
+
+		// SET #, A
+		extList.fns[0xc7+0x08*i] = Op{
+			code:    0xc7 + 0x08*i,
+			cycles:  8,
+			label:   fmt.Sprintf("SET %d, A", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				r.SetA(SetBit(r.GetA(), i))
+			},
+		}
+
+		// SET #, B
+		extList.fns[0xc0+0x08*i] = Op{
+			code:    0xc0 + 0x08*i,
+			cycles:  8,
+			label:   fmt.Sprintf("SET %d, B", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				r.SetB(SetBit(r.GetB(), i))
+			},
+		}
+
+		// SET #, C
+		extList.fns[0xc1+0x08*i] = Op{
+			code:    0xc1 + 0x08*i,
+			cycles:  8,
+			label:   fmt.Sprintf("SET %d, C", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				r.SetC(SetBit(r.GetC(), i))
+			},
+		}
+
+		// SET #, D
+		extList.fns[0xc2+0x08*i] = Op{
+			code:    0xc2 + 0x08*i,
+			cycles:  8,
+			label:   fmt.Sprintf("SET %d, D", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				r.SetD(SetBit(r.GetD(), i))
+			},
+		}
+
+		// SET #, E
+		extList.fns[0xc3+0x08*i] = Op{
+			code:    0xc3 + 0x08*i,
+			cycles:  8,
+			label:   fmt.Sprintf("SET %d, E", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				r.SetE(SetBit(r.GetE(), i))
+			},
+		}
+
+		// SET #, H
+		extList.fns[0xc4+0x08*i] = Op{
+			code:    0xc4 + 0x08*i,
+			cycles:  8,
+			label:   fmt.Sprintf("SET %d, H", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				r.SetH(SetBit(r.GetH(), i))
+			},
+		}
+
+		// SET #, L
+		extList.fns[0xc5+0x08*i] = Op{
+			code:    0xc5 + 0x08*i,
+			cycles:  8,
+			label:   fmt.Sprintf("SET %d, L", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				r.SetL(SetBit(r.GetL(), i))
+			},
+		}
+
+		// SET #, (HL)
+		extList.fns[0xc6+0x08*i] = Op{
+			code:    0xc6 + 0x08*i,
+			cycles:  16,
+			label:   fmt.Sprintf("SET %d, (HL)", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				m.WriteByte(r.GetHL(), SetBit(m.ReadByte(r.GetHL()), i))
+			},
+		}
+
+		// RES #, A
+		extList.fns[0x87+0x08*i] = Op{
+			code:    0x87 + 0x08*i,
+			cycles:  8,
+			label:   fmt.Sprintf("RES %d, A", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				r.SetA(ClearBit(r.GetA(), i))
+			},
+		}
+
+		// RES #, B
+		extList.fns[0x80+0x08*i] = Op{
+			code:    0x80 + 0x08*i,
+			cycles:  8,
+			label:   fmt.Sprintf("RES %d, B", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				r.SetB(ClearBit(r.GetB(), i))
+			},
+		}
+
+		// RES #, C
+		extList.fns[0x81+0x08*i] = Op{
+			code:    0x81 + 0x08*i,
+			cycles:  8,
+			label:   fmt.Sprintf("RES %d, C", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				r.SetC(ClearBit(r.GetC(), i))
+			},
+		}
+
+		// RES #, D
+		extList.fns[0x82+0x08*i] = Op{
+			code:    0x82 + 0x08*i,
+			cycles:  8,
+			label:   fmt.Sprintf("RES %d, D", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				r.SetD(ClearBit(r.GetD(), i))
+			},
+		}
+
+		// RES #, E
+		extList.fns[0x83+0x08*i] = Op{
+			code:    0x83 + 0x08*i,
+			cycles:  8,
+			label:   fmt.Sprintf("RES %d, E", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				r.SetE(ClearBit(r.GetE(), i))
+			},
+		}
+
+		// RES #, H
+		extList.fns[0x84+0x08*i] = Op{
+			code:    0x84 + 0x08*i,
+			cycles:  8,
+			label:   fmt.Sprintf("RES %d, H", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				r.SetH(ClearBit(r.GetH(), i))
+			},
+		}
+
+		// RES #, L
+		extList.fns[0x85+0x08*i] = Op{
+			code:    0x85 + 0x08*i,
+			cycles:  8,
+			label:   fmt.Sprintf("RES %d, L", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				r.SetL(ClearBit(r.GetL(), i))
+			},
+		}
+
+		// RES #, (HL)
+		extList.fns[0x86+0x08*i] = Op{
+			code:    0x86 + 0x08*i,
+			cycles:  16,
+			label:   fmt.Sprintf("RES %d, (HL)", i),
+			argsLen: 0,
+			fn: func(r *Registers, m emulator.Memory, args []int) {
+				m.WriteByte(r.GetHL(), ClearBit(m.ReadByte(r.GetHL()), i))
+			},
+		}
 	}
 
 	return mainList, extList

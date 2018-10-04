@@ -40,7 +40,7 @@ func SetBit(val, addr int) int {
 }
 
 // Clear Bit clears the addr
-func clearBit(val, addr int) int {
+func ClearBit(val, addr int) int {
 	return ^(1 << uint(addr)) & val & 0xff
 }
 
@@ -49,7 +49,7 @@ func HandleSetBit(val, addr int, toSet bool) int {
 	if toSet {
 		return SetBit(val, addr)
 	}
-	return clearBit(val, addr)
+	return ClearBit(val, addr)
 }
 
 // BitAbs is the absolute value implementation for signed byte values
