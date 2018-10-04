@@ -62,7 +62,7 @@ func BitAbs(signed int) int {
 
 // AddSignedByteToWord adds a signed byte to a 16bit (2byte) word
 // Answer from: https://stackoverflow.com/questions/5159603/gbz80-how-does-ld-hl-spe-affect-h-and-c-flags/7261149#7261149
-func AddSignedByteToWord(f *cpuFlags, word, signed int) int {
+func AddSignedByteToWord(f *Flags, word, signed int) int {
 	f.SetZ(false)
 	f.SetN(false)
 
@@ -79,7 +79,7 @@ func AddSignedByteToWord(f *cpuFlags, word, signed int) int {
 }
 
 // AddBytes adds 2 bytes togethers and sets the correct flags before returning the result
-func AddBytes(f *cpuFlags, b1, b2 int) int {
+func AddBytes(f *Flags, b1, b2 int) int {
 	f.SetZ(((b1 + b2) & 0xff) == 0)
 	f.SetN(false)
 	f.SetH((b1&0x0f)+(b2&0x0f) > 0x0f)
@@ -87,8 +87,8 @@ func AddBytes(f *cpuFlags, b1, b2 int) int {
 	return (b1 + b2) & 0xff
 }
 
-// AddBytesAndCarry is the same as AddBytes with respect to the carry flag (cpuFlags.c)
-func AddBytesAndCarry(f *cpuFlags, b1, b2 int) int {
+// AddBytesAndCarry is the same as AddBytes with respect to the carry flag (Flags.c)
+func AddBytesAndCarry(f *Flags, b1, b2 int) int {
 	carry := 0
 	if f.IsC() {
 		carry = 1
@@ -104,7 +104,7 @@ func AddBytesAndCarry(f *cpuFlags, b1, b2 int) int {
 }
 
 // AddWords is the same as AddBytes but with 2 16bit (2bytes) words
-func AddWords(f *cpuFlags, w1, w2 int) int {
+func AddWords(f *Flags, w1, w2 int) int {
 	f.SetN(false)
 	f.SetH((w1&0x0fff)+(w2&0x0fff) > 0x0fff)
 	f.SetC(w1+w2 > 0xffff)
@@ -112,7 +112,7 @@ func AddWords(f *cpuFlags, w1, w2 int) int {
 }
 
 // SubBytes takes the difference between two bytes and sets the flags before returning the result
-func SubBytes(f *cpuFlags, b1, b2 int) int {
+func SubBytes(f *Flags, b1, b2 int) int {
 	f.SetZ(((b1 - b2) & 0xff) == 0)
 	f.SetN(true)
 	f.SetH((0x0f & b2) > (0x0f & b1))
@@ -120,8 +120,8 @@ func SubBytes(f *cpuFlags, b1, b2 int) int {
 	return (b1 - b2) % 0xff
 }
 
-// SubBytesAndCarry is the same as SubBytes with respect to the carry flag (cpuFlags.c)
-func SubBytesAndCarry(f *cpuFlags, b1, b2 int) int {
+// SubBytesAndCarry is the same as SubBytes with respect to the carry flag (Flags.c)
+func SubBytesAndCarry(f *Flags, b1, b2 int) int {
 	carry := 0
 	if f.IsC() {
 		carry = 1
@@ -137,7 +137,7 @@ func SubBytesAndCarry(f *cpuFlags, b1, b2 int) int {
 }
 
 // And runs the & operator between two bytes, sets the flags before returning the value
-func And(f *cpuFlags, b1, b2 int) int {
+func And(f *Flags, b1, b2 int) int {
 	res := b1 & b2
 	f.SetZ(res == 0)
 	f.SetN(false)
@@ -147,7 +147,7 @@ func And(f *cpuFlags, b1, b2 int) int {
 }
 
 // Or runs the | operator between two bytes, sets the flags before returning the value
-func Or(f *cpuFlags, b1, b2 int) int {
+func Or(f *Flags, b1, b2 int) int {
 	res := b1 | b2
 	f.SetZ(res == 0)
 	f.SetN(false)
@@ -157,7 +157,7 @@ func Or(f *cpuFlags, b1, b2 int) int {
 }
 
 // Xor runs the ^ operator between two bytes, sets the flags before returning the value
-func Xor(f *cpuFlags, b1, b2 int) int {
+func Xor(f *Flags, b1, b2 int) int {
 	res := b1 ^ b2
 	f.SetZ(res == 0)
 	f.SetN(false)
@@ -167,7 +167,7 @@ func Xor(f *cpuFlags, b1, b2 int) int {
 }
 
 // IncByte increments the byte and sets the flags before returning the value
-func IncByte(f *cpuFlags, b int) int {
+func IncByte(f *Flags, b int) int {
 	res := (b + 1) & 0xff
 	f.SetZ(res == 0)
 	f.SetN(false)
@@ -176,7 +176,7 @@ func IncByte(f *cpuFlags, b int) int {
 }
 
 // DecByte decrements the byte and sets the flags before returning the value
-func DecByte(f *cpuFlags, b int) int {
+func DecByte(f *Flags, b int) int {
 	res := (b - 1) & 0xff
 	f.SetZ(res == 0)
 	f.SetN(true)
@@ -185,7 +185,7 @@ func DecByte(f *cpuFlags, b int) int {
 }
 
 // Swap swaps the upper and lower bits of the byte, sets flags before returning swapped value
-func Swap(f *cpuFlags, b int) int {
+func Swap(f *Flags, b int) int {
 	upper := b & 0xf0
 	lower := b & 0x0f
 	res := (lower << 4) | (upper >> 4)
@@ -198,7 +198,7 @@ func Swap(f *cpuFlags, b int) int {
 }
 
 // RotateRight uses the >> operator, sets the flags before returning the value
-func RotateRight(f *cpuFlags, b int) int {
+func RotateRight(f *Flags, b int) int {
 	res := b >> 1
 	if (b & 1) == 1 {
 		res |= (1 << 7)
@@ -215,7 +215,7 @@ func RotateRight(f *cpuFlags, b int) int {
 
 // RotateRightThroughCarry uses the >> operater, set the flags with respect to the
 // carry flag before returning the value
-func RotateRightThroughCarry(f *cpuFlags, b int) int {
+func RotateRightThroughCarry(f *Flags, b int) int {
 	res := b >> 1
 	if f.IsC() {
 		res |= (1 << 7)
@@ -231,7 +231,7 @@ func RotateRightThroughCarry(f *cpuFlags, b int) int {
 }
 
 // RotateLeft uses the << operator, sets the flags before returning the value
-func RotateLeft(f *cpuFlags, b int) int {
+func RotateLeft(f *Flags, b int) int {
 	res := (b << 1) & 0xff
 	if b&(1<<7) != 0 {
 		res |= 1
@@ -247,7 +247,7 @@ func RotateLeft(f *cpuFlags, b int) int {
 }
 
 // RotateLeftThroughCarry like RotateLeft with respect to the cary flag
-func RotateLeftThroughCarry(f *cpuFlags, b int) int {
+func RotateLeftThroughCarry(f *Flags, b int) int {
 	res := (b << 1) & 0xff
 	if f.IsC() {
 		res |= 1
@@ -263,7 +263,7 @@ func RotateLeftThroughCarry(f *cpuFlags, b int) int {
 }
 
 // ShiftLeft uses the << operator and sets flags
-func ShiftLeft(f *cpuFlags, b int) int {
+func ShiftLeft(f *Flags, b int) int {
 	res := (b << 1) & 0xff
 	f.SetC((b & (1 << 7)) != 0)
 	f.SetZ(res == 0)
@@ -273,7 +273,7 @@ func ShiftLeft(f *cpuFlags, b int) int {
 }
 
 // ShiftRightArithmetic
-func ShiftRightArithmetic(f *cpuFlags, b int) int {
+func ShiftRightArithmetic(f *Flags, b int) int {
 	res := (b >> 1) | (b & (1 << 7))
 
 	f.SetC((b & 1) != 0)
@@ -284,7 +284,7 @@ func ShiftRightArithmetic(f *cpuFlags, b int) int {
 }
 
 // ShiftRightLogical
-func ShiftRightLogical(f *cpuFlags, b int) int {
+func ShiftRightLogical(f *Flags, b int) int {
 	res := b >> 1
 
 	f.SetC((b & 1) != 0)
@@ -295,7 +295,7 @@ func ShiftRightLogical(f *cpuFlags, b int) int {
 }
 
 // Bit sets flags based on the given byte value and bit
-func Bit(f *cpuFlags, val, b int) {
+func Bit(f *Flags, val, b int) {
 	f.SetN(false)
 	f.SetH(true)
 	if b < 8 {
@@ -304,7 +304,7 @@ func Bit(f *cpuFlags, val, b int) {
 }
 
 // Push pushes a word to the top of the stack
-func Push(r *CPURegisters, m emulator.Memory, word int) {
+func Push(r *Registers, m emulator.Memory, word int) {
 	r.DecSP()
 	m.WriteByte(r.GetSP(), UpperByte(word))
 	r.DecSP()
@@ -312,7 +312,7 @@ func Push(r *CPURegisters, m emulator.Memory, word int) {
 }
 
 // Pop returns the top word from the stack
-func Pop(r *CPURegisters, m emulator.Memory) int {
+func Pop(r *Registers, m emulator.Memory) int {
 	lower := m.ReadByte(r.GetSP())
 	r.IncSP()
 	upper := m.ReadByte(r.GetSP())
@@ -320,18 +320,18 @@ func Pop(r *CPURegisters, m emulator.Memory) int {
 }
 
 // Call calls the given address
-func Call(r *CPURegisters, m emulator.Memory, addr int) {
+func Call(r *Registers, m emulator.Memory, addr int) {
 	Push(r, m, (r.GetPC()+3)&0xffff)
 	r.SetPC(addr)
 }
 
 // Reset resets the value of PC to the given address
-func Reset(r *CPURegisters, m emulator.Memory, addr int) {
+func Reset(r *Registers, m emulator.Memory, addr int) {
 	Push(r, m, r.GetPC())
 	r.SetPC(addr)
 }
 
 // Ret sets the PC to the top of the stack
-func Ret(r *CPURegisters, m emulator.Memory) {
+func Ret(r *Registers, m emulator.Memory) {
 	r.SetPC(Pop(r, m))
 }

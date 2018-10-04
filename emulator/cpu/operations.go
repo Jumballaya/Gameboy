@@ -7,7 +7,7 @@ import (
 )
 
 // Operation function
-type OpFn func(*CPURegisters, emulator.Memory, []int) // Takes Registers, MMU and the arguments list
+type OpFn func(*Registers, emulator.Memory, []int) // Takes Registers, MMU and the arguments list
 
 // Operation
 type Op struct {
@@ -26,11 +26,11 @@ func (o *Op) String() string {
 // Oplist is a map of functions (operations) for the CPU
 type Oplist struct {
 	fns       map[int]Op
-	registers *CPURegisters
+	registers *Registers
 }
 
 // SetRegisters sets the registers
-func (ol *Oplist) SetRegisters(r *CPURegisters) {
+func (ol *Oplist) SetRegisters(r *Registers) {
 	ol.registers = r
 }
 

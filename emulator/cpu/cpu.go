@@ -4,24 +4,23 @@ import (
 	"fmt"
 
 	"github.com/jumballaya/gameboy/emulator"
-	"github.com/jumballaya/gameboy/emulator/gpu"
 )
 
 // CPU is the emulated Z80 processor
 type CPU struct {
-	Registers *CPURegisters
+	Registers *Registers
 	Clock     int
 	Halt      int
 	Stop      int
 	ops       *Oplist
 	mmu       emulator.Memory
-	gpu       *gpu.GPU
+	gpu       emulator.Memory
 }
 
 // New creates a new CPU
-func New(mmu emulator.Memory, gpu *gpu.GPU) *CPU {
+func New(mmu emulator.Memory, gpu emulator.Memory) *CPU {
 	cpu := &CPU{
-		Registers: newCPURegisters(),
+		Registers: newRegisters(),
 		Clock:     0,
 		Halt:      0,
 		Stop:      0,
@@ -35,7 +34,7 @@ func New(mmu emulator.Memory, gpu *gpu.GPU) *CPU {
 
 // Reset sets all the values back to their starting positions
 func (cpu *CPU) Reset() {
-	cpu.Registers = newCPURegisters()
+	cpu.Registers = newRegisters()
 	cpu.ops, _ = makeOpList(cpu.Registers)
 	cpu.Clock = 0
 	cpu.Halt = 0

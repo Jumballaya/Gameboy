@@ -2,7 +2,7 @@ package cpu
 
 import "github.com/jumballaya/gameboy/emulator"
 
-func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
+func makeOpList(r *Registers) (*Oplist, *Oplist) {
 	// Main OpList
 	mainList := &Oplist{
 		registers: r,
@@ -16,7 +16,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD B, n",
 				argsLen: 1,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetB(args[0]) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetB(args[0]) },
 			},
 
 			// LD C, n
@@ -25,7 +25,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD C, n",
 				argsLen: 1,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetC(args[0]) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetC(args[0]) },
 			},
 
 			// LD D, n
@@ -34,7 +34,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD D, n",
 				argsLen: 1,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetD(args[0]) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetD(args[0]) },
 			},
 
 			// LD E, n
@@ -43,7 +43,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD E, n",
 				argsLen: 1,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetE(args[0]) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetE(args[0]) },
 			},
 
 			// LD H, n
@@ -52,7 +52,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD H, n",
 				argsLen: 1,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetH(args[0]) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetH(args[0]) },
 			},
 
 			// LD L, n
@@ -61,7 +61,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD L, n",
 				argsLen: 1,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetL(args[0]) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetL(args[0]) },
 			},
 
 			// LD B, B
@@ -70,7 +70,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD B, B",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetB(r.GetB()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetB(r.GetB()) },
 			},
 
 			// LD B, C
@@ -79,7 +79,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD B, C",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetB(r.GetC()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetB(r.GetC()) },
 			},
 
 			// LD B, D
@@ -88,7 +88,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD B, D",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetB(r.GetD()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetB(r.GetD()) },
 			},
 
 			// LD B, E
@@ -97,7 +97,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD B, E",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetB(r.GetE()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetB(r.GetE()) },
 			},
 
 			// LD B, H
@@ -106,7 +106,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD B, H",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetB(r.GetH()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetB(r.GetH()) },
 			},
 
 			// LD B, L
@@ -115,7 +115,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD B, L",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetB(r.GetL()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetB(r.GetL()) },
 			},
 
 			// LD B, (HL)
@@ -124,7 +124,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD B, (HL)",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetB(m.ReadByte(r.GetHL())) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetB(m.ReadByte(r.GetHL())) },
 			},
 
 			// LD C, B
@@ -133,7 +133,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD C, B",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetC(r.GetB()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetC(r.GetB()) },
 			},
 
 			// LD C, C
@@ -142,7 +142,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD C, C",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetC(r.GetC()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetC(r.GetC()) },
 			},
 
 			// LD C, D
@@ -151,7 +151,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD C, D",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetC(r.GetD()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetC(r.GetD()) },
 			},
 
 			// LD C, E
@@ -160,7 +160,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD C, E",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetC(r.GetE()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetC(r.GetE()) },
 			},
 
 			// LD C, H
@@ -169,7 +169,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD C, H",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetC(r.GetH()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetC(r.GetH()) },
 			},
 
 			// LD C, L
@@ -178,7 +178,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD C, L",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetC(r.GetL()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetC(r.GetL()) },
 			},
 
 			// LD C, (HL)
@@ -187,7 +187,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD C, (HL)",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetC(m.ReadByte(r.GetHL())) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetC(m.ReadByte(r.GetHL())) },
 			},
 
 			// LD D, B
@@ -196,7 +196,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD D, B",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetD(r.GetB()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetD(r.GetB()) },
 			},
 
 			// LD D, C
@@ -205,7 +205,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD D, C",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetD(r.GetC()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetD(r.GetC()) },
 			},
 
 			// LD D, D
@@ -214,7 +214,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD D, D",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetD(r.GetD()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetD(r.GetD()) },
 			},
 
 			// LD D, E
@@ -223,7 +223,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD D, E",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetD(r.GetE()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetD(r.GetE()) },
 			},
 
 			// LD D, H
@@ -232,7 +232,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD D, H",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetD(r.GetH()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetD(r.GetH()) },
 			},
 
 			// LD D, L
@@ -241,7 +241,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD D, L",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetD(r.GetL()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetD(r.GetL()) },
 			},
 
 			// LD D, (HL)
@@ -250,7 +250,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD D, (HL)",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetD(m.ReadByte(r.GetHL())) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetD(m.ReadByte(r.GetHL())) },
 			},
 
 			// LD E, B
@@ -259,7 +259,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD E, B",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetE(r.GetB()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetE(r.GetB()) },
 			},
 
 			// LD E, C
@@ -268,7 +268,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD E, C",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetE(r.GetC()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetE(r.GetC()) },
 			},
 
 			// LD E, D
@@ -277,7 +277,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD E, D",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetE(r.GetD()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetE(r.GetD()) },
 			},
 
 			// LD E, E
@@ -286,7 +286,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD E, E",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetE(r.GetE()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetE(r.GetE()) },
 			},
 
 			// LD E, H
@@ -295,7 +295,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD E, H",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetE(r.GetH()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetE(r.GetH()) },
 			},
 
 			// LD E, L
@@ -304,7 +304,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD E, L",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetE(r.GetL()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetE(r.GetL()) },
 			},
 
 			// LD E, (HL)
@@ -313,7 +313,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD E, (HL)",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetE(m.ReadByte(r.GetHL())) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetE(m.ReadByte(r.GetHL())) },
 			},
 
 			// LD H, B
@@ -322,7 +322,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD H, B",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetH(r.GetB()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetH(r.GetB()) },
 			},
 
 			// LD H, C
@@ -331,7 +331,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD H, C",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetH(r.GetC()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetH(r.GetC()) },
 			},
 
 			// LD H, D
@@ -340,7 +340,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD H, D",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetH(r.GetD()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetH(r.GetD()) },
 			},
 
 			// LD H, E
@@ -349,7 +349,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD H, E",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetH(r.GetE()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetH(r.GetE()) },
 			},
 
 			// LD H, H
@@ -358,7 +358,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD H, H",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetH(r.GetH()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetH(r.GetH()) },
 			},
 
 			// LD H, L
@@ -367,7 +367,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD H, L",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetH(r.GetL()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetH(r.GetL()) },
 			},
 
 			// LD H, (HL)
@@ -376,7 +376,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD H, (HL)",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetH(m.ReadByte(r.GetHL())) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetH(m.ReadByte(r.GetHL())) },
 			},
 
 			// LD L, B
@@ -385,7 +385,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD L, B",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetL(r.GetB()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetL(r.GetB()) },
 			},
 
 			// LD L, C
@@ -394,7 +394,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD L, C",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetL(r.GetC()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetL(r.GetC()) },
 			},
 
 			// LD L, D
@@ -403,7 +403,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD L, D",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetL(r.GetD()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetL(r.GetD()) },
 			},
 
 			// LD L, E
@@ -412,7 +412,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD L, E",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetL(r.GetE()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetL(r.GetE()) },
 			},
 
 			// LD L, H
@@ -421,7 +421,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD L, H",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetL(r.GetH()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetL(r.GetH()) },
 			},
 
 			// LD L, L
@@ -430,7 +430,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD L, L",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetL(r.GetL()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetL(r.GetL()) },
 			},
 
 			// LD L, (HL)
@@ -439,7 +439,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD L, (HL)",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetL(m.ReadByte(r.GetHL())) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetL(m.ReadByte(r.GetHL())) },
 			},
 
 			// LD (HL), B
@@ -448,7 +448,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				argsLen: 0,
 				label:   "(HL), B",
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { m.WriteByte(r.GetHL(), r.GetB()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { m.WriteByte(r.GetHL(), r.GetB()) },
 			},
 
 			// LD (HL), C
@@ -457,7 +457,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				argsLen: 0,
 				label:   "(HL), C",
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { m.WriteByte(r.GetHL(), r.GetC()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { m.WriteByte(r.GetHL(), r.GetC()) },
 			},
 
 			// LD (HL), D
@@ -466,7 +466,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				argsLen: 0,
 				label:   "(HL), D",
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { m.WriteByte(r.GetHL(), r.GetD()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { m.WriteByte(r.GetHL(), r.GetD()) },
 			},
 
 			// LD (HL), E
@@ -475,7 +475,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				argsLen: 0,
 				label:   "(HL), E",
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { m.WriteByte(r.GetHL(), r.GetE()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { m.WriteByte(r.GetHL(), r.GetE()) },
 			},
 
 			// LD (HL), H
@@ -484,7 +484,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "(HL), B",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { m.WriteByte(r.GetHL(), r.GetH()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { m.WriteByte(r.GetHL(), r.GetH()) },
 			},
 
 			// LD (HL), L
@@ -493,7 +493,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "(HL), L",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { m.WriteByte(r.GetHL(), r.GetL()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { m.WriteByte(r.GetHL(), r.GetL()) },
 			},
 
 			// LD (HL), n
@@ -502,7 +502,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "(HL), n",
 				argsLen: 1,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { m.WriteByte(r.GetHL(), args[0]) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { m.WriteByte(r.GetHL(), args[0]) },
 			},
 
 			// LD A, A
@@ -511,7 +511,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD A, A",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetA(r.GetA()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetA(r.GetA()) },
 			},
 
 			// LD A, B
@@ -520,7 +520,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD A, B",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetA(r.GetB()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetA(r.GetB()) },
 			},
 
 			// LD A, C
@@ -529,7 +529,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD A, C",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetA(r.GetC()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetA(r.GetC()) },
 			},
 
 			// LD A, D
@@ -538,7 +538,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD A, D",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetA(r.GetD()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetA(r.GetD()) },
 			},
 
 			// LD A, E
@@ -547,7 +547,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD A, E",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetA(r.GetE()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetA(r.GetE()) },
 			},
 
 			// LD A, H
@@ -556,7 +556,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD A, H",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetA(r.GetH()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetA(r.GetH()) },
 			},
 
 			// LD A, L
@@ -565,7 +565,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD A, L",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetA(r.GetL()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetA(r.GetL()) },
 			},
 
 			// LD A, (HL)
@@ -574,7 +574,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD A, (HL)",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetA(m.ReadByte(r.GetHL())) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetA(m.ReadByte(r.GetHL())) },
 			},
 
 			// LD A, (BC)
@@ -583,7 +583,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD A, (BC)",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetA(m.ReadByte(r.GetBC())) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetA(m.ReadByte(r.GetBC())) },
 			},
 
 			// LD A, (DE)
@@ -592,7 +592,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD A, (DE)",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetA(m.ReadByte(r.GetDE())) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetA(m.ReadByte(r.GetDE())) },
 			},
 
 			// LD A, (nn)
@@ -601,7 +601,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  16,
 				label:   "LD A, (nn)",
 				argsLen: 2,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetA(ToWord(args[0], args[1])) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetA(ToWord(args[0], args[1])) },
 			},
 
 			// LD A, #
@@ -610,7 +610,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  16,
 				label:   "LD A, #",
 				argsLen: 1,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetA(args[0]) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetA(args[0]) },
 			},
 
 			// LD B, A
@@ -619,7 +619,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD B, A",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetB(r.GetA()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetB(r.GetA()) },
 			},
 
 			// LD C, A
@@ -628,7 +628,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD C, A",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetC(r.GetA()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetC(r.GetA()) },
 			},
 
 			// LD D, A
@@ -637,7 +637,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD D, A",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetD(r.GetA()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetD(r.GetA()) },
 			},
 
 			// LD E, A
@@ -646,7 +646,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD E, A",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetE(r.GetA()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetE(r.GetA()) },
 			},
 
 			// LD H, A
@@ -655,7 +655,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD H, A",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetH(r.GetA()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetH(r.GetA()) },
 			},
 
 			// LD L, A
@@ -664,7 +664,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "LD L, A",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetL(r.GetA()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetL(r.GetA()) },
 			},
 
 			// LD (BC), A
@@ -673,7 +673,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD (BC), A",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { m.WriteByte(r.GetBC(), r.GetA()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { m.WriteByte(r.GetBC(), r.GetA()) },
 			},
 
 			// LD (DE), A
@@ -682,7 +682,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD (DE), A",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { m.WriteByte(r.GetDE(), r.GetA()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { m.WriteByte(r.GetDE(), r.GetA()) },
 			},
 
 			// LD (HL), A
@@ -691,7 +691,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD (HL), A",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { m.WriteByte(r.GetHL(), r.GetA()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { m.WriteByte(r.GetHL(), r.GetA()) },
 			},
 
 			// LD (nn), A
@@ -700,7 +700,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  16,
 				label:   "LD (nn), A",
 				argsLen: 2,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					m.WriteByte(ToWord(args[0], args[1]), r.GetA())
 				},
 			},
@@ -711,7 +711,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD A, (C)",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(m.ReadByte(0xff00 + r.GetC()))
 				},
 			},
@@ -722,7 +722,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD (C), A",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					m.WriteByte(0xff00+r.GetC(), r.GetA())
 				},
 			},
@@ -733,7 +733,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD A, (HLD)",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(m.ReadByte(r.DecHL()))
 				},
 			},
@@ -744,7 +744,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD (HLD), A",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					m.WriteByte(r.DecHL(), r.GetA())
 				},
 			},
@@ -755,7 +755,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD A, (HLD)",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(m.ReadByte(r.IncHL()))
 				},
 			},
@@ -766,7 +766,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD (HLD), A",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					m.WriteByte(r.IncHL(), r.GetA())
 				},
 			},
@@ -777,7 +777,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "LDH (n), A",
 				argsLen: 1,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					m.WriteByte(0xfff0+args[0], r.GetA())
 				},
 			},
@@ -788,7 +788,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "LDH A, (n)",
 				argsLen: 1,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(m.ReadByte(0xfff0 + args[0]))
 				},
 			},
@@ -799,7 +799,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "LD BC, nn",
 				argsLen: 2,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetBC(ToWord(args[0], args[1]))
 				},
 			},
@@ -810,7 +810,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "LD DE, nn",
 				argsLen: 2,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetDE(ToWord(args[0], args[1]))
 				},
 			},
@@ -821,7 +821,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "LD HL, nn",
 				argsLen: 2,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetHL(ToWord(args[0], args[1]))
 				},
 			},
@@ -832,7 +832,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "LD SP, nn",
 				argsLen: 2,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetSP(ToWord(args[0], args[1]))
 				},
 			},
@@ -843,7 +843,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "LD SP, HL",
 				argsLen: 2,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) { r.SetSP(r.GetHL()) },
+				fn:      func(r *Registers, m emulator.Memory, args []int) { r.SetSP(r.GetHL()) },
 			},
 
 			// LDHL SP, n
@@ -852,7 +852,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "LDHL SP, n",
 				argsLen: 1,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetHL(AddSignedByteToWord(r.flags, r.GetSP(), args[0]))
 				},
 			},
@@ -863,7 +863,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  20,
 				label:   "LD (nn), SP",
 				argsLen: 2,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					argWord := ToWord(args[0], args[1])
 					m.WriteByte(argWord, LowerByte(r.GetSP()))
 					m.WriteByte((argWord+1)&0xffff, UpperByte(r.GetSP()))
@@ -878,7 +878,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  16,
 				label:   "PUSH AF",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					Push(r, m, r.GetAF())
 				},
 			},
@@ -889,7 +889,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  16,
 				label:   "PUSH BC",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					Push(r, m, r.GetBC())
 				},
 			},
@@ -900,7 +900,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  16,
 				label:   "PUSH DE",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					Push(r, m, r.GetDE())
 				},
 			},
@@ -911,7 +911,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  16,
 				label:   "PUSH HL",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					Push(r, m, r.GetHL())
 				},
 			},
@@ -922,7 +922,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "POP AF",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetAF(Pop(r, m))
 				},
 			},
@@ -933,7 +933,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "POP BC",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetBC(Pop(r, m))
 				},
 			},
@@ -944,7 +944,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "POP DE",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetDE(Pop(r, m))
 				},
 			},
@@ -955,7 +955,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "POP HL",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetHL(Pop(r, m))
 				},
 			},
@@ -966,7 +966,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "ADD A, A",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(AddBytes(r.GetFlags(), r.GetA(), r.GetA()))
 				},
 			},
@@ -977,7 +977,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "ADD A, B",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(AddBytes(r.GetFlags(), r.GetA(), r.GetB()))
 				},
 			},
@@ -988,7 +988,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "ADD A, C",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(AddBytes(r.GetFlags(), r.GetA(), r.GetC()))
 				},
 			},
@@ -999,7 +999,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "ADD A, D",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(AddBytes(r.GetFlags(), r.GetA(), r.GetD()))
 				},
 			},
@@ -1010,7 +1010,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "ADD A, E",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(AddBytes(r.GetFlags(), r.GetA(), r.GetE()))
 				},
 			},
@@ -1021,7 +1021,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "ADD A, H",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(AddBytes(r.GetFlags(), r.GetA(), r.GetH()))
 				},
 			},
@@ -1032,7 +1032,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "ADD A, L",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(AddBytes(r.GetFlags(), r.GetA(), r.GetL()))
 				},
 			},
@@ -1043,7 +1043,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "ADD A, (HL)",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(AddBytes(r.GetFlags(), r.GetA(), m.ReadByte(r.GetHL())))
 				},
 			},
@@ -1054,7 +1054,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "ADD A, #",
 				argsLen: 1,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(AddBytes(r.GetFlags(), r.GetA(), args[0]))
 				},
 			},
@@ -1065,7 +1065,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "ADC A, A",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(AddBytesAndCarry(r.GetFlags(), r.GetA(), r.GetA()))
 				},
 			},
@@ -1076,7 +1076,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "ADC A, B",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(AddBytesAndCarry(r.GetFlags(), r.GetA(), r.GetB()))
 				},
 			},
@@ -1087,7 +1087,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "ADC A, C",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(AddBytesAndCarry(r.GetFlags(), r.GetA(), r.GetC()))
 				},
 			},
@@ -1098,7 +1098,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "ADC A, D",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(AddBytesAndCarry(r.GetFlags(), r.GetA(), r.GetD()))
 				},
 			},
@@ -1109,7 +1109,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "ADC A, E",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(AddBytesAndCarry(r.GetFlags(), r.GetA(), r.GetE()))
 				},
 			},
@@ -1120,7 +1120,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "ADC A, H",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(AddBytesAndCarry(r.GetFlags(), r.GetA(), r.GetH()))
 				},
 			},
@@ -1131,7 +1131,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "ADC A, L",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(AddBytesAndCarry(r.GetFlags(), r.GetA(), r.GetL()))
 				},
 			},
@@ -1142,7 +1142,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "ADC A, (HL)",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(AddBytesAndCarry(r.GetFlags(), r.GetA(), m.ReadByte(r.GetHL())))
 				},
 			},
@@ -1153,7 +1153,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "ADC A, #",
 				argsLen: 1,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(AddBytesAndCarry(r.GetFlags(), r.GetA(), args[0]))
 				},
 			},
@@ -1164,7 +1164,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "SUB A, A",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(SubBytes(r.GetFlags(), r.GetA(), r.GetA()))
 				},
 			},
@@ -1175,7 +1175,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "SUB A, B",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(SubBytes(r.GetFlags(), r.GetA(), r.GetB()))
 				},
 			},
@@ -1186,7 +1186,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "SUB A, C",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(SubBytes(r.GetFlags(), r.GetA(), r.GetC()))
 				},
 			},
@@ -1197,7 +1197,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "SUB A, D",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(SubBytes(r.GetFlags(), r.GetA(), r.GetD()))
 				},
 			},
@@ -1208,7 +1208,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "SUB A, E",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(SubBytes(r.GetFlags(), r.GetA(), r.GetE()))
 				},
 			},
@@ -1219,7 +1219,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "SUB A, H",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(SubBytes(r.GetFlags(), r.GetA(), r.GetH()))
 				},
 			},
@@ -1230,7 +1230,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "SUB A, L",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(SubBytes(r.GetFlags(), r.GetA(), r.GetL()))
 				},
 			},
@@ -1241,7 +1241,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "SUB A, (HL)",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(SubBytes(r.GetFlags(), r.GetA(), m.ReadByte(r.GetHL())))
 				},
 			},
@@ -1252,7 +1252,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "SUB A, #",
 				argsLen: 1,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(SubBytes(r.GetFlags(), r.GetA(), args[0]))
 				},
 			},
@@ -1263,7 +1263,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "SBC A, A",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(SubBytesAndCarry(r.GetFlags(), r.GetA(), r.GetA()))
 				},
 			},
@@ -1274,7 +1274,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "SBC A, B",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(SubBytesAndCarry(r.GetFlags(), r.GetA(), r.GetB()))
 				},
 			},
@@ -1285,7 +1285,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "SBC A, C",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(SubBytesAndCarry(r.GetFlags(), r.GetA(), r.GetC()))
 				},
 			},
@@ -1296,7 +1296,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "SBC A, D",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(SubBytesAndCarry(r.GetFlags(), r.GetA(), r.GetD()))
 				},
 			},
@@ -1307,7 +1307,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "SBC A, E",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(SubBytesAndCarry(r.GetFlags(), r.GetA(), r.GetE()))
 				},
 			},
@@ -1318,7 +1318,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "SBC A, H",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(SubBytesAndCarry(r.GetFlags(), r.GetA(), r.GetH()))
 				},
 			},
@@ -1329,7 +1329,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "SBC A, L",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(SubBytesAndCarry(r.GetFlags(), r.GetA(), r.GetL()))
 				},
 			},
@@ -1340,7 +1340,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "SBC A, (HL)",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(SubBytesAndCarry(r.GetFlags(), r.GetA(), m.ReadByte(r.GetHL())))
 				},
 			},
@@ -1351,7 +1351,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "AND A, A",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(And(r.GetFlags(), r.GetA(), r.GetA()))
 				},
 			},
@@ -1362,7 +1362,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "AND A, B",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(And(r.GetFlags(), r.GetA(), r.GetB()))
 				},
 			},
@@ -1373,7 +1373,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "AND A, C",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(And(r.GetFlags(), r.GetA(), r.GetC()))
 				},
 			},
@@ -1384,7 +1384,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "AND A, D",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(And(r.GetFlags(), r.GetA(), r.GetD()))
 				},
 			},
@@ -1395,7 +1395,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "AND A, E",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(And(r.GetFlags(), r.GetA(), r.GetE()))
 				},
 			},
@@ -1406,7 +1406,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "AND A, H",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(And(r.GetFlags(), r.GetA(), r.GetH()))
 				},
 			},
@@ -1417,7 +1417,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "AND A, L",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(And(r.GetFlags(), r.GetA(), r.GetL()))
 				},
 			},
@@ -1428,7 +1428,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "AND A, (HL)",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(And(r.GetFlags(), r.GetA(), m.ReadByte(r.GetHL())))
 				},
 			},
@@ -1439,7 +1439,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "AND A, #",
 				argsLen: 1,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(And(r.GetFlags(), r.GetA(), args[0]))
 				},
 			},
@@ -1450,7 +1450,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "OR A, A",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(Or(r.GetFlags(), r.GetA(), r.GetA()))
 				},
 			},
@@ -1461,7 +1461,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "OR A, B",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(Or(r.GetFlags(), r.GetA(), r.GetB()))
 				},
 			},
@@ -1472,7 +1472,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "OR A, C",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(Or(r.GetFlags(), r.GetA(), r.GetC()))
 				},
 			},
@@ -1483,7 +1483,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "OR A, D",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(Or(r.GetFlags(), r.GetA(), r.GetD()))
 				},
 			},
@@ -1494,7 +1494,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "OR A, E",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(Or(r.GetFlags(), r.GetA(), r.GetE()))
 				},
 			},
@@ -1505,7 +1505,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "OR A, H",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(Or(r.GetFlags(), r.GetA(), r.GetH()))
 				},
 			},
@@ -1516,7 +1516,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "OR A, L",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(Or(r.GetFlags(), r.GetA(), r.GetL()))
 				},
 			},
@@ -1527,7 +1527,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "OR A, (HL)",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(Or(r.GetFlags(), r.GetA(), m.ReadByte(r.GetHL())))
 				},
 			},
@@ -1538,7 +1538,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "OR A, #",
 				argsLen: 1,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(Or(r.GetFlags(), r.GetA(), args[0]))
 				},
 			},
@@ -1549,7 +1549,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "XOR A, A",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(Xor(r.GetFlags(), r.GetA(), r.GetA()))
 				},
 			},
@@ -1560,7 +1560,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "XOR A, B",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(Xor(r.GetFlags(), r.GetA(), r.GetB()))
 				},
 			},
@@ -1571,7 +1571,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "XOR A, C",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(Xor(r.GetFlags(), r.GetA(), r.GetC()))
 				},
 			},
@@ -1582,7 +1582,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "XOR A, D",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(Xor(r.GetFlags(), r.GetA(), r.GetD()))
 				},
 			},
@@ -1593,7 +1593,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "XOR A, E",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(Xor(r.GetFlags(), r.GetA(), r.GetE()))
 				},
 			},
@@ -1604,7 +1604,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "XOR A, H",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(Xor(r.GetFlags(), r.GetA(), r.GetH()))
 				},
 			},
@@ -1615,7 +1615,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "XOR A, L",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(Xor(r.GetFlags(), r.GetA(), r.GetL()))
 				},
 			},
@@ -1626,7 +1626,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "XOR A, (HL)",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(Xor(r.GetFlags(), r.GetA(), m.ReadByte(r.GetHL())))
 				},
 			},
@@ -1637,7 +1637,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "XOR A, #",
 				argsLen: 1,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(Xor(r.GetFlags(), r.GetA(), args[0]))
 				},
 			},
@@ -1648,7 +1648,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "CP A, A",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					SubBytes(r.GetFlags(), r.GetA(), r.GetA())
 				},
 			},
@@ -1659,7 +1659,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "CP A, B",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					SubBytes(r.GetFlags(), r.GetA(), r.GetB())
 				},
 			},
@@ -1670,7 +1670,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "CP A, C",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					SubBytes(r.GetFlags(), r.GetA(), r.GetC())
 				},
 			},
@@ -1681,7 +1681,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "CP A, D",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					SubBytes(r.GetFlags(), r.GetA(), r.GetD())
 				},
 			},
@@ -1692,7 +1692,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "CP A, E",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					SubBytes(r.GetFlags(), r.GetA(), r.GetE())
 				},
 			},
@@ -1703,7 +1703,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "CP A, H",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					SubBytes(r.GetFlags(), r.GetA(), r.GetH())
 				},
 			},
@@ -1714,7 +1714,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "CP A, L",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					SubBytes(r.GetFlags(), r.GetA(), r.GetL())
 				},
 			},
@@ -1725,7 +1725,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "CP A, (HL)",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					SubBytes(r.GetFlags(), r.GetA(), m.ReadByte(r.GetHL()))
 				},
 			},
@@ -1736,7 +1736,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "CP A, #",
 				argsLen: 1,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					SubBytes(r.GetFlags(), r.GetA(), args[0])
 				},
 			},
@@ -1747,7 +1747,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "INC A",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(IncByte(r.GetFlags(), r.GetA()))
 				},
 			},
@@ -1758,7 +1758,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "INC B",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetB(IncByte(r.GetFlags(), r.GetB()))
 				},
 			},
@@ -1769,7 +1769,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "INC C",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetC(IncByte(r.GetFlags(), r.GetC()))
 				},
 			},
@@ -1780,7 +1780,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "INC D",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetD(IncByte(r.GetFlags(), r.GetD()))
 				},
 			},
@@ -1791,7 +1791,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "INC E",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetE(IncByte(r.GetFlags(), r.GetE()))
 				},
 			},
@@ -1802,7 +1802,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "INC H",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetH(IncByte(r.GetFlags(), r.GetH()))
 				},
 			},
@@ -1813,7 +1813,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "INC L",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetL(IncByte(r.GetFlags(), r.GetL()))
 				},
 			},
@@ -1824,7 +1824,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "INC (HL)",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					m.WriteByte(r.GetHL(), IncByte(r.GetFlags(), m.ReadByte(r.GetHL())))
 				},
 			},
@@ -1835,7 +1835,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "DEC A",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(DecByte(r.GetFlags(), r.GetA()))
 				},
 			},
@@ -1846,7 +1846,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "DEC B",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetB(DecByte(r.GetFlags(), r.GetB()))
 				},
 			},
@@ -1857,7 +1857,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "DEC C",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetC(DecByte(r.GetFlags(), r.GetC()))
 				},
 			},
@@ -1868,7 +1868,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "DEC D",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetD(DecByte(r.GetFlags(), r.GetD()))
 				},
 			},
@@ -1879,7 +1879,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "DEC E",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetE(DecByte(r.GetFlags(), r.GetE()))
 				},
 			},
@@ -1890,7 +1890,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "DEC H",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetH(DecByte(r.GetFlags(), r.GetH()))
 				},
 			},
@@ -1901,7 +1901,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "DEC L",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetL(DecByte(r.GetFlags(), r.GetL()))
 				},
 			},
@@ -1912,7 +1912,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "DEC (HL)",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					m.WriteByte(r.GetHL(), DecByte(r.GetFlags(), m.ReadByte(r.GetHL())))
 				},
 			},
@@ -1923,7 +1923,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "ADD HL, BC",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetHL(AddWords(r.GetFlags(), r.GetHL(), r.GetBC()))
 				},
 			},
@@ -1934,7 +1934,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "ADD HL, DE",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetHL(AddWords(r.GetFlags(), r.GetHL(), r.GetDE()))
 				},
 			},
@@ -1945,7 +1945,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "ADD HL, BC",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetHL(AddWords(r.GetFlags(), r.GetHL(), r.GetHL()))
 				},
 			},
@@ -1956,7 +1956,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "ADD HL, SP",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetHL(AddWords(r.GetFlags(), r.GetHL(), r.GetSP()))
 				},
 			},
@@ -1967,7 +1967,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  16,
 				label:   "ADD SP, #",
 				argsLen: 1,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetSP(AddSignedByteToWord(r.GetFlags(), r.GetSP(), args[0]))
 				},
 			},
@@ -1978,7 +1978,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "INC BC",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetBC((r.GetBC() + 1) & 0xffff)
 				},
 			},
@@ -1989,7 +1989,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "INC DE",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetDE((r.GetDE() + 1) & 0xffff)
 				},
 			},
@@ -2000,7 +2000,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "INC HL",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetHL((r.GetHL() + 1) & 0xffff)
 				},
 			},
@@ -2011,7 +2011,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "INC SP",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetSP((r.GetSP() + 1) & 0xffff)
 				},
 			},
@@ -2022,7 +2022,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "DEC BC",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetBC((r.GetBC() - 1) & 0xffff)
 				},
 			},
@@ -2033,7 +2033,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "DEC DE",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetDE((r.GetDE() - 1) & 0xffff)
 				},
 			},
@@ -2044,7 +2044,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "DEC HL",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetHL((r.GetHL() - 1) & 0xffff)
 				},
 			},
@@ -2055,7 +2055,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "DEC SP",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetSP((r.GetSP() - 1) & 0xffff)
 				},
 			},
@@ -2066,7 +2066,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "DAA",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					res := r.GetA()
 					flags := r.GetFlags()
 					if (res&0x0f) > 9 || flags.IsH() {
@@ -2089,7 +2089,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "CPL",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					f := r.GetFlags()
 
 					f.SetN(true)
@@ -2105,7 +2105,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "CCF",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					f := r.GetFlags()
 
 					f.SetN(false)
@@ -2121,7 +2121,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "SCF",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					f := r.GetFlags()
 
 					f.SetN(false)
@@ -2136,7 +2136,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "NOP",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) {},
+				fn:      func(r *Registers, m emulator.Memory, args []int) {},
 			},
 
 			// HALT
@@ -2145,7 +2145,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "HALT",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) {},
+				fn:      func(r *Registers, m emulator.Memory, args []int) {},
 			},
 
 			// STOP
@@ -2154,7 +2154,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "STOP",
 				argsLen: 1,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) {},
+				fn:      func(r *Registers, m emulator.Memory, args []int) {},
 			},
 
 			// DI
@@ -2163,7 +2163,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "DI",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) {},
+				fn:      func(r *Registers, m emulator.Memory, args []int) {},
 			},
 
 			// EI
@@ -2172,7 +2172,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "EI",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) {},
+				fn:      func(r *Registers, m emulator.Memory, args []int) {},
 			},
 
 			// RLCA
@@ -2181,7 +2181,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "RLCA",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(RotateLeft(r.GetFlags(), r.GetA()))
 				},
 			},
@@ -2192,7 +2192,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "RLA",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(RotateLeftThroughCarry(r.GetFlags(), r.GetA()))
 				},
 			},
@@ -2203,7 +2203,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "RRCA",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(RotateRight(r.GetFlags(), r.GetA()))
 				},
 			},
@@ -2214,7 +2214,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "RRA",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetA(RotateRightThroughCarry(r.GetFlags(), r.GetA()))
 				},
 			},
@@ -2227,7 +2227,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "JMP nn",
 				argsLen: 2,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetPC(ToWord(args[0], args[1]))
 				},
 			},
@@ -2238,7 +2238,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "JP NZ, nn",
 				argsLen: 2,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					if !r.GetFlags().IsZ() {
 						r.SetPC(ToWord(args[0], args[1]))
 					}
@@ -2251,7 +2251,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "JP Z, nn",
 				argsLen: 2,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					if r.GetFlags().IsZ() {
 						r.SetPC(ToWord(args[0], args[1]))
 					}
@@ -2264,7 +2264,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "JP NC, nn",
 				argsLen: 2,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					if !r.GetFlags().IsC() {
 						r.SetPC(ToWord(args[0], args[1]))
 					}
@@ -2277,7 +2277,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "JP C, nn",
 				argsLen: 2,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					if r.GetFlags().IsC() {
 						r.SetPC(ToWord(args[0], args[1]))
 					}
@@ -2290,7 +2290,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  4,
 				label:   "JP (HL)",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.SetPC(r.GetHL())
 				},
 			},
@@ -2301,7 +2301,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "JR n",
 				argsLen: 1,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					r.AddToPC(args[0])
 				},
 			},
@@ -2312,7 +2312,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "JR NZ, n",
 				argsLen: 1,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					if !r.GetFlags().IsZ() {
 						r.AddToPC(args[0])
 					}
@@ -2325,7 +2325,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "JR Z, n",
 				argsLen: 1,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					if r.GetFlags().IsZ() {
 						r.AddToPC(args[0])
 					}
@@ -2338,7 +2338,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "JR NC, n",
 				argsLen: 1,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					if !r.GetFlags().IsC() {
 						r.AddToPC(args[0])
 					}
@@ -2351,7 +2351,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "JR C, n",
 				argsLen: 1,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					if r.GetFlags().IsC() {
 						r.AddToPC(args[0])
 					}
@@ -2364,7 +2364,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "CALL nn",
 				argsLen: 2,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					Call(r, m, ToWord(args[0], args[1]))
 				},
 			},
@@ -2375,7 +2375,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "CALL NZ, n",
 				argsLen: 2,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					if !r.GetFlags().IsZ() {
 						Call(r, m, ToWord(args[0], args[1]))
 					}
@@ -2388,7 +2388,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "CALL Z, n",
 				argsLen: 2,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					if r.GetFlags().IsZ() {
 						Call(r, m, ToWord(args[0], args[1]))
 					}
@@ -2401,7 +2401,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "CALL NC, n",
 				argsLen: 2,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					if !r.GetFlags().IsC() {
 						Call(r, m, ToWord(args[0], args[1]))
 					}
@@ -2414,7 +2414,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  12,
 				label:   "CALL C, n",
 				argsLen: 2,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					if r.GetFlags().IsC() {
 						Call(r, m, ToWord(args[0], args[1]))
 					}
@@ -2427,7 +2427,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  32,
 				label:   "RST 00H",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					Reset(r, m, 0x00)
 				},
 			},
@@ -2438,7 +2438,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  32,
 				label:   "RST 08H",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					Reset(r, m, 0x08)
 				},
 			},
@@ -2449,7 +2449,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  32,
 				label:   "RST 10H",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					Reset(r, m, 0x10)
 				},
 			},
@@ -2460,7 +2460,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  32,
 				label:   "RST 18H",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					Reset(r, m, 0x18)
 				},
 			},
@@ -2471,7 +2471,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  32,
 				label:   "RST 20H",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					Reset(r, m, 0x20)
 				},
 			},
@@ -2482,7 +2482,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  32,
 				label:   "RST 28H",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					Reset(r, m, 0x28)
 				},
 			},
@@ -2493,7 +2493,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  32,
 				label:   "RST 30H",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					Reset(r, m, 0x30)
 				},
 			},
@@ -2504,7 +2504,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  32,
 				label:   "RST 38H",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					Reset(r, m, 0x38)
 				},
 			},
@@ -2515,7 +2515,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "RET",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					Ret(r, m)
 				},
 			},
@@ -2526,7 +2526,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "RET NZ",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					if !r.GetFlags().IsZ() {
 						Ret(r, m)
 					}
@@ -2539,7 +2539,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "RET Z",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					if r.GetFlags().IsZ() {
 						Ret(r, m)
 					}
@@ -2552,7 +2552,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "RET NC",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					if !r.GetFlags().IsC() {
 						Ret(r, m)
 					}
@@ -2565,7 +2565,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "RET C",
 				argsLen: 0,
-				fn: func(r *CPURegisters, m emulator.Memory, args []int) {
+				fn: func(r *Registers, m emulator.Memory, args []int) {
 					if r.GetFlags().IsC() {
 						Ret(r, m)
 					}
@@ -2578,7 +2578,7 @@ func makeOpList(r *CPURegisters) (*Oplist, *Oplist) {
 				cycles:  8,
 				label:   "RETI",
 				argsLen: 0,
-				fn:      func(r *CPURegisters, m emulator.Memory, args []int) {},
+				fn:      func(r *Registers, m emulator.Memory, args []int) {},
 			},
 		},
 	}
