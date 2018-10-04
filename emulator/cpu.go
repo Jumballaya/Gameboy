@@ -23,7 +23,7 @@ func newCPU(mmu *MMU, gpu *GPU) *CPU {
 		gpu:       gpu,
 		mmu:       mmu,
 	}
-	cpu.ops = makeOpList(cpu.Registers)
+	cpu.ops, _ = makeOpList(cpu.Registers)
 
 	return cpu
 }
@@ -31,7 +31,7 @@ func newCPU(mmu *MMU, gpu *GPU) *CPU {
 // Reset sets all the values back to their starting positions
 func (cpu *CPU) Reset() {
 	cpu.Registers = newCPURegisters()
-	cpu.ops = makeOpList(cpu.Registers)
+	cpu.ops, _ = makeOpList(cpu.Registers)
 	cpu.Clock = 0
 	cpu.Halt = 0
 	cpu.Stop = 0
