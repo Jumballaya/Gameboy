@@ -57,7 +57,6 @@ func (cpu *CPU) Exec() int {
 	pc += 1
 
 	var op Op
-
 	if opCode == 0xcb {
 		opCode = cpu.mmu.ReadByte(pc)
 		pc += 1
@@ -66,13 +65,15 @@ func (cpu *CPU) Exec() int {
 		op = cpu.ops["main"].fns[opCode]
 	}
 
-	fmt.Println(op.String())
-
 	argsLen := op.argsLen
 	var args []int
 	for i := 0; i < argsLen; i++ {
 		args = append(args, cpu.mmu.ReadByte(pc))
 		pc += 1
+	}
+
+	if op.label != "NOP" {
+		fmt.Println(op.label)
 	}
 
 	cpu.Registers.SetPC(pc)

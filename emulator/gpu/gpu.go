@@ -62,7 +62,11 @@ func (gpu *GPU) Reset() {
 }
 
 // ReadByte reads the memory at the given byte address
-func (gpu *GPU) ReadByte(addr int) int { return 0 }
+func (gpu *GPU) ReadByte(addr int) int {
+	return gpu.vram[addr%len(gpu.vram)]
+}
 
 // WriteByte is the opposite of ReadByte and writes the val at the given address
-func (gpu *GPU) WriteByte(addr, val int) {}
+func (gpu *GPU) WriteByte(addr, val int) {
+	gpu.vram[addr%len(gpu.vram)] = val
+}
