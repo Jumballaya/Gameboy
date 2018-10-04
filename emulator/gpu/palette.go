@@ -1,4 +1,4 @@
-package emulator
+package gpu
 
 // Palette holds the GPUs palette data
 type Palette struct {

@@ -1,4 +1,4 @@
-package emulator
+package cpu
 
 // CPU Flags
 type cpuFlags struct {

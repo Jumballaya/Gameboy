@@ -1,6 +1,11 @@
-package emulator
+package cpu
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/jumballaya/gameboy/emulator"
+	"github.com/jumballaya/gameboy/emulator/gpu"
+)
 
 // CPU is the emulated Z80 processor
 type CPU struct {
@@ -9,12 +14,12 @@ type CPU struct {
 	Halt      int
 	Stop      int
 	ops       *Oplist
-	mmu       *MMU
-	gpu       *GPU
+	mmu       emulator.Memory
+	gpu       *gpu.GPU
 }
 
-// NewCPU creates a new CPU
-func newCPU(mmu *MMU, gpu *GPU) *CPU {
+// New creates a new CPU
+func New(mmu emulator.Memory, gpu *gpu.GPU) *CPU {
 	cpu := &CPU{
 		Registers: newCPURegisters(),
 		Clock:     0,

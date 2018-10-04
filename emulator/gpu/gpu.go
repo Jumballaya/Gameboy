@@ -1,4 +1,4 @@
-package emulator
+package gpu
 
 // Memory Management Unit struct
 type GPU struct {
@@ -35,8 +35,8 @@ type GPU struct {
 	winTileBase int
 }
 
-// NewGPU creates a new MMU
-func newGPU() *GPU {
+// New creates a new GPU
+func New() *GPU {
 	gpu := &GPU{}
 	gpu.Reset()
 	return gpu

@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/jumballaya/gameboy/emulator"
+	emulator "github.com/jumballaya/gameboy/emulator/core"
 )
 
 func Run(rom []byte) {

@@ -1,4 +1,4 @@
-package emulator
+package mmu
 
 // FROM: https://github.com/trekawek/coffee-gb/blob/master/src/main/java/eu/rekawek/coffeegb/memory/BootRom.java
 //

@@ -1,4 +1,4 @@
-package emulator
+package gpu
 
 // TileMap is the structure that holds the tilemap data for the game
 type TileMap [512][8][8]int

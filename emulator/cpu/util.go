@@ -1,4 +1,6 @@
-package emulator
+package cpu
+
+import "github.com/jumballaya/gameboy/emulator"
 
 // SplitBytes takes a 16 bit number and splits it into the upper and lower 8bit sections
 func SplitWord(word int) (int, int) {
@@ -302,7 +304,7 @@ func Bit(f *cpuFlags, val, b int) {
 }
 
 // Push pushes a word to the top of the stack
-func Push(r *CPURegisters, m *MMU, word int) {
+func Push(r *CPURegisters, m emulator.Memory, word int) {
 	r.DecSP()
 	m.WriteByte(r.GetSP(), UpperByte(word))
 	r.DecSP()
@@ -310,7 +312,7 @@ func Push(r *CPURegisters, m *MMU, word int) {
 }
 
 // Pop returns the top word from the stack
-func Pop(r *CPURegisters, m *MMU) int {
+func Pop(r *CPURegisters, m emulator.Memory) int {
 	lower := m.ReadByte(r.GetSP())
 	r.IncSP()
 	upper := m.ReadByte(r.GetSP())
@@ -318,18 +320,18 @@ func Pop(r *CPURegisters, m *MMU) int {
 }
 
 // Call calls the given address
-func Call(r *CPURegisters, m *MMU, addr int) {
+func Call(r *CPURegisters, m emulator.Memory, addr int) {
 	Push(r, m, (r.GetPC()+3)&0xffff)
 	r.SetPC(addr)
 }
 
 // Reset resets the value of PC to the given address
-func Reset(r *CPURegisters, m *MMU, addr int) {
+func Reset(r *CPURegisters, m emulator.Memory, addr int) {
 	Push(r, m, r.GetPC())
 	r.SetPC(addr)
 }
 
 // Ret sets the PC to the top of the stack
-func Ret(r *CPURegisters, m *MMU) {
+func Ret(r *CPURegisters, m emulator.Memory) {
 	r.SetPC(Pop(r, m))
 }

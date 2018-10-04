@@ -1,4 +1,4 @@
-package emulator
+package gpu
 
 // ImgData holds the information for the screen
 // It is an integer array that is L x W x 4. Each pixel is split into 4 numbers

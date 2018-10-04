@@ -1,47 +1,7 @@
 package emulator
 
-// Emulator structure
-type Emulator struct {
-	cpu *CPU
-	mmu *MMU
-	gpu *GPU
+// Memory is an interface for dealing with anything that reads/writes bytes to a store
+type Memory interface {
+	ReadByte(int) int
+	WriteByte(addr, val int)
 }
-
-// New creates a new Emulator
-func New() *Emulator {
-	mmu := newMMU()
-	gpu := newGPU()
-	cpu := newCPU(mmu, gpu)
-
-	e := &Emulator{
-		cpu: cpu,
-		mmu: mmu,
-		gpu: gpu,
-	}
-	e.Reset()
-
-	return e
-}
-
-// Reset resets everything
-func (e *Emulator) Reset() {
-	e.cpu.Reset()
-	e.gpu.Reset()
-	e.mmu.Reset()
-}
-
-// Load loads the ROM data
-func (e *Emulator) Load(rom []byte) error {
-	e.mmu.Load(rom)
-	return nil
-}
-
-// Start starts the emulator and runs the ROM
-func (e *Emulator) Start() {
-	for {
-		e.cpu.Exec()
-	}
-}
-
-// Pause pauses the emulator
-func (e *Emulator) Pause() {}

@@ -1,9 +1,13 @@
-package emulator
+package cpu
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/jumballaya/gameboy/emulator"
+)
 
 // Operation function
-type OpFn func(*CPURegisters, *MMU, []int) // Takes Registers, MMU and the arguments list
+type OpFn func(*CPURegisters, emulator.Memory, []int) // Takes Registers, MMU and the arguments list
 
 // Operation
 type Op struct {

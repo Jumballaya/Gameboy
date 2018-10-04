@@ -1,4 +1,4 @@
-package emulator
+package mmu
 
 // Memory Management Unit struct
 type MMU struct {
@@ -17,8 +17,8 @@ type MMU struct {
 	inBios int
 }
 
-// NewMMU creates a new MMU
-func newMMU() *MMU {
+// New creates a new MMU
+func New() *MMU {
 	mmu := &MMU{
 		bios: biosClassic,
 	}
