@@ -4,6 +4,8 @@ package emulator
 type Memory interface {
 	ReadByte(int) int
 	WriteByte(addr, val int)
+	ReadWord(int) int
+	WriteWord(addr, val int)
 }
 
 // Renderer takes the pixel array and renders it

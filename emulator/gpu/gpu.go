@@ -1,7 +1,10 @@
 package gpu
 
+import "github.com/jumballaya/gameboy/emulator"
+
 // Memory Management Unit struct
 type GPU struct {
+	mmu           emulator.Memory
 	vram          [8192]int
 	oam           [160]int
 	reg           []int
@@ -70,3 +73,11 @@ func (gpu *GPU) ReadByte(addr int) int {
 func (gpu *GPU) WriteByte(addr, val int) {
 	gpu.vram[addr%len(gpu.vram)] = val
 }
+
+// ReadWord reads a 2-byte (16 bit) word instead of the a single byte
+func (gpu *GPU) ReadWord(addr int) int {
+	return 0
+}
+
+// WriteWord write a 2-byte word
+func (gpu *GPU) WriteWord(addr, val int) {}
