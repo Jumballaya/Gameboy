@@ -4,19 +4,13 @@ Gameboy and Gameboy Color emulator written in Go.
 
 ## Installation
 
-`go install project`
+`go install gameboy`
 
 ## Usage
 
-`make build` - builds the project to the dist folder
+`make build` - builds the gameboy binary to the dist folder
 `make run` - runs the binary
 `make test` - runs the tests
-
-#### Docker
-
-`make docker-build` - builds the docker image
-`make docker-run` - runs the docker image
-
 
 #### References
 
